@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import styles from '@/app/page.module.css';
-import { Navigation } from './Navigation';
-import { User } from './User';
+import { Navigation } from '@/components/Navigation';
+import { User } from '@/components/User';
 
 const Header = () => {
   return (
