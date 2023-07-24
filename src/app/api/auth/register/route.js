@@ -31,7 +31,8 @@ export async function POST(request) {
       email: savedUser.email,
     };
 
-    return NextResponse.json(userWithoutPass, { status: 201 });
+    return NextResponse.json(body, { status: 201 });
+    // return NextResponse.json(userWithoutPass, { status: 201 });
   } catch (error) {
     console.log('error :>> ', error);
     return NextResponse.json({ error }, { status: 500 });
