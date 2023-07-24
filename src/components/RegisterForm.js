@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import styles from '@/app/page.module.css';
 import { toast } from 'react-hot-toast';
 // import { signIn } from 'next-auth/react';
+
+import styles from '@/app/page.module.css';
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const RegisterForm = () => {
 
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/register', {
+      const resRegister = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,13 +32,33 @@ const RegisterForm = () => {
         body: JSON.stringify(userData),
       });
 
-      const user = await res.json();
+      let user = await resRegister.json();
 
       if (user && !user.error) {
         console.log('user+ :>> ', user);
         toast.success('User created successfully');
 
-        router.push('/auth/login');
+        // router.push('/auth/login');
+      } else {
+        console.log('user- :>> ', user.error);
+        toast.error(user.error);
+      }
+
+      const resLogin = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      user = await resLogin.json();
+
+      if (user && !user.error) {
+        console.log('user+ :>> ', user);
+        toast.success('User logged in successfully');
+
+        router.push('/');
       } else {
         console.log('user- :>> ', user.error);
         toast.error(user.error);
