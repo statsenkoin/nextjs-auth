@@ -1,13 +1,13 @@
 'use client';
 
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import styles from '@/app/page.module.css';
-// import axios from 'axios';
+import { toast } from 'react-hot-toast';
 // import { signIn } from 'next-auth/react';
 
 const RegisterForm = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -15,38 +15,39 @@ const RegisterForm = () => {
 
     const formData = new FormData(event.currentTarget);
 
-    // const user = {
-    //   name: formData.get('name'),
-    //   email: formData.get('email'),
-    //   password: formData.get('password'),
-    //   provider: 'credentials',
-    // };
+    const userData = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+    };
 
-    // try {
-    //   setLoading(true);
-    //   const response = await axios.post('/api/auth/register', user);
-    //   console.log('Signup success', response.data);
+    try {
+      setLoading(true);
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
 
-    //   // router.push('/signin');
+      const user = await res.json();
 
-    //   const res = await signIn('credentials', {
-    //     email: user.email,
-    //     password: user.password,
-    //     redirect: false,
-    //   });
-    //   if (res && !res.error) {
-    //     window.alert('User created successfully');
-    //     router.push('/');
-    //   } else {
-    //     console.log('res- :>> ', res);
-    //   }
-    // } catch (error) {
-    //   console.log('Signup failed', error.message);
-    //   console.log('Signup failed: ', error.response.data.error);
-    //   window.alert(error.response.data.error);
-    // } finally {
-    //   setLoading(false);
-    // }
+      if (user && !user.error) {
+        console.log('user+ :>> ', user);
+        toast.success('User created successfully');
+
+        router.push('/auth/login');
+      } else {
+        console.log('user- :>> ', user.error);
+        toast.error(user.error);
+      }
+    } catch (error) {
+      console.log('error :>> ', error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
