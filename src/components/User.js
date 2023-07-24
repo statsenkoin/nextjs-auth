@@ -22,6 +22,9 @@ export const User = () => {
       <Link href="/" className={styles.links} onClick={handleSignOut}>
         Sign Out
       </Link>
+      <Link href="/auth/register" className={styles.links}>
+        Sign In
+      </Link>
     </div>
   );
 };
