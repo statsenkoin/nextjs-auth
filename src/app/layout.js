@@ -1,5 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
+import toast, { Toaster } from 'react-hot-toast';
+
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Providers } from '@/components/Providers';
@@ -20,6 +22,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         {/* </Providers> */}
+        <Toaster />
       </body>
     </html>
   );
