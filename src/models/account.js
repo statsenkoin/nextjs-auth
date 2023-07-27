@@ -2,7 +2,12 @@ import { Schema, model, models } from 'mongoose';
 
 const AccountSchema = new Schema(
   {
-    userId: { type: String, required: true },
+    // userId: { type: String, required: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
     type: { type: String },
     provider: { type: String },
     providerAccountId: { type: String },
