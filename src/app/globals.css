@@ -13,5 +13,5 @@ main {
   min-height: calc(100vh - var(--headerHeight) - var(--footerHeight));
 
   text-align: center;
-  padding-top: 50px;
+  padding-top: 100px;
 }
